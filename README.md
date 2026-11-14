@@ -12,7 +12,8 @@ ready-to-run **cURL** commands without leaving the editor.
 
 - **Modules → endpoints.** Endpoints are grouped by tag. Untagged endpoints are
   grouped by their first path segment (`/items/{id}` → `items`).
-- **One details tab.** Clicking an endpoint opens its details beside your code.
+- **One details tab.** Clicking an endpoint opens its details as a tab in your
+  current editor group (or in a split, if you prefer).
   Clicking another endpoint replaces the contents of the same tab.
 - **cURL commands.** Generated from examples and schemas, with file uploads
   (`-F file=@…`), form bodies and auth placeholders (`Bearer <token>`,
@@ -45,9 +46,10 @@ ready-to-run **cURL** commands without leaving the editor.
 The URL is saved in the `specRenderer.specUrl` setting. When a folder is open
 it is saved to the workspace, so each project keeps its own spec.
 
-| Setting                 | Description                                         |
-| ----------------------- | --------------------------------------------------- |
-| `specRenderer.specUrl`  | URL of the spec, or of a docs page that links to it. |
+| Setting                       | Description                                                                 |
+| ----------------------------- | --------------------------------------------------------------------------- |
+| `specRenderer.specUrl`        | URL of the spec, or of a docs page that links to it.                        |
+| `specRenderer.openEndpointIn` | `activeGroup` (default): open details as a tab in the current editor group. `beside`: open them in a split next to it. |
 
 | Command                              | Where                  |
 | ------------------------------------ | ---------------------- |

@@ -9,6 +9,8 @@
 - Endpoint details open in a single editor tab that is reused for each endpoint.
   It is a two-column docs page: reference on the left, sticky cURL and example
   response cards on the right.
+- Setting `specRenderer.openEndpointIn`: open endpoint details in the active
+  editor group (default) or in a split beside it.
 - Added Swagger 2.0 support.
 - Spec discovery from docs pages such as `/docs` and `/swagger-ui/index.html`.
 - Specs with validation errors load with a warning instead of failing.

@@ -15,6 +15,13 @@ export async function setSpecUrl(url: string): Promise<void> {
   await vscode.workspace.getConfiguration(SECTION).update(SPEC_URL_KEY, url, target);
 }
 
+export type OpenEndpointIn = "activeGroup" | "beside";
+
+export function getOpenEndpointIn(): OpenEndpointIn {
+  const value = vscode.workspace.getConfiguration(SECTION).get<string>("openEndpointIn", "activeGroup");
+  return value === "beside" ? "beside" : "activeGroup";
+}
+
 export function affectsSpecUrl(event: vscode.ConfigurationChangeEvent): boolean {
   return event.affectsConfiguration(`${SECTION}.${SPEC_URL_KEY}`);
 }

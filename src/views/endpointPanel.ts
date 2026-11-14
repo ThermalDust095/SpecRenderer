@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { getOpenEndpointIn } from "../config";
 import type { EndpointDetail, HostToPanel, PanelToHost } from "../shared/protocol";
 import { webviewHtml, webviewOptions } from "./webviewHtml";
 
@@ -42,7 +43,10 @@ export class EndpointPanel implements vscode.Disposable {
   }
 
   private createPanel(): vscode.WebviewPanel {
-    const column = vscode.window.activeTextEditor ? vscode.ViewColumn.Beside : vscode.ViewColumn.Active;
+    const column =
+      getOpenEndpointIn() === "beside" && vscode.window.activeTextEditor
+        ? vscode.ViewColumn.Beside
+        : vscode.ViewColumn.Active;
     const panel = vscode.window.createWebviewPanel(
       "specRenderer.endpoint",
       "Endpoint",

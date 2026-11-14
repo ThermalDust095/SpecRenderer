@@ -83,6 +83,16 @@
           "type": "string",
           "default": "",
           "markdownDescription": "URL of an OpenAPI 3.x or Swagger 2.0 document (JSON or YAML). A docs page such as `http://localhost:8000/docs` also works: the spec is discovered automatically."
+        },
+        "specRenderer.openEndpointIn": {
+          "type": "string",
+          "enum": ["activeGroup", "beside"],
+          "enumDescriptions": [
+            "Open endpoint details as a tab in the editor group you're working in.",
+            "Open endpoint details in a split editor group next to the active editor."
+          ],
+          "default": "activeGroup",
+          "description": "Where the endpoint details tab opens the first time you click an endpoint. After that, the same tab is reused wherever it is."
         }
       }
     },
