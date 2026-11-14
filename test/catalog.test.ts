@@ -25,6 +25,9 @@ test("endpoint detail describes params, body fields and responses", async () => 
   const spec = await load(openApi31);
   const list = buildEndpointDetail(spec, find(spec, "get", "/items"));
   assert.deepEqual(list.parameters.map((p) => `${p.name}:${p.type}:${p.location}`), ["limit:integer:query", "q:string:query"]);
+  assert.equal(list.module, "items");
+  assert.equal(list.parameters[0].example, "10");
+  assert.equal(list.parameters[1].example, undefined);
   assert.equal(list.responses[0].status, "200");
   assert.match(list.responses[0].example ?? "", /"name": "Widget"/);
 
@@ -35,6 +38,7 @@ test("endpoint detail describes params, body fields and responses", async () => 
     "name:string:true",
     "price:number | null:false",
   ]);
+  assert.equal(create.body?.fields[0].example, '"Widget"');
 
   const upload = buildEndpointDetail(spec, find(spec, "post", "/upload"));
   assert.deepEqual(upload.auth, [{ name: "bearer", label: "Bearer" }]);

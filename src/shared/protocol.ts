@@ -41,6 +41,8 @@ export interface FieldView {
   description?: string;
   /** Parameter location (path, query, header, cookie) when this is a parameter. */
   location?: string;
+  /** Explicit example, default or first enum value, formatted as JSON. */
+  example?: string;
 }
 
 export interface BodyView {
@@ -70,6 +72,8 @@ export interface EndpointDetail {
   method: string;
   path: string;
   baseUrl: string;
+  /** Module (tag or first path segment) the endpoint is listed under. */
+  module: string;
   title: string;
   operationId?: string;
   description?: string;

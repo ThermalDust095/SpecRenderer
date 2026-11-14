@@ -5,7 +5,7 @@ ready-to-run **cURL** commands without leaving the editor.
 
 <p>
   <img src="docs/images/sidebar.png" alt="Spec Renderer sidebar listing modules and endpoints" width="300">
-  <img src="docs/images/panel.png" alt="Endpoint details with cURL, parameters, body and responses" width="520">
+  <img src="docs/images/panel.png" alt="Endpoint details page with parameters, responses, cURL and example response" width="620">
 </p>
 
 ## Features
@@ -17,8 +17,9 @@ ready-to-run **cURL** commands without leaving the editor.
 - **cURL commands.** Generated from examples and schemas, with file uploads
   (`-F file=@…`), form bodies and auth placeholders (`Bearer <token>`,
   `<api-key>`).
-- **Params, body and responses.** Field types, required flags, and examples for
-  each status code.
+- **Docs-style details page.** Parameters grouped by location, request body and
+  collapsible responses on the left. Sticky code cards on the right with the
+  cURL command and a line-numbered example response.
 - **Point it at a docs page.** `http://localhost:8000/docs` (FastAPI),
   `/swagger-ui/index.html` (Spring) and similar pages work; the spec URL is found
   automatically.
@@ -101,4 +102,4 @@ Publishing steps are in [docs/PUBLISHING.md](docs/PUBLISHING.md).
 
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE). Bundled fonts: see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

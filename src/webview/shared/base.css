@@ -1,27 +1,30 @@
 /* Shared tokens for both webviews. Colors derive from the active VS Code theme. */
+@import "./fonts.css";
+
 :root {
+  --sr-sans: "Geist", var(--vscode-font-family), system-ui, sans-serif;
   --sr-radius: 4px;
   --sr-border: var(--vscode-widget-border, var(--vscode-panel-border, rgba(128, 128, 128, 0.25)));
   --sr-muted: var(--vscode-descriptionForeground);
-  --sr-mono: var(--vscode-editor-font-family, ui-monospace, monospace);
+  --sr-mono: "Geist Mono", var(--vscode-editor-font-family), ui-monospace, monospace;
   --sr-hover: var(--vscode-list-hoverBackground);
   --sr-code-bg: var(--vscode-textCodeBlock-background, rgba(128, 128, 128, 0.1));
   --sr-subtle-bg: color-mix(in srgb, var(--vscode-foreground) 6%, transparent);
 
-  --sr-get: #4ec98f;
-  --sr-post: #f2b84b;
-  --sr-put: #6cb2f7;
-  --sr-patch: #c79bf2;
-  --sr-delete: #f0806f;
+  --sr-get: #3ddc84;
+  --sr-post: #5b8cff;
+  --sr-put: #ff9f43;
+  --sr-patch: #b98cff;
+  --sr-delete: #ff5d6c;
   --sr-other: #9ba3ad;
 }
 
 body.vscode-light {
-  --sr-get: #13804c;
-  --sr-post: #a86500;
-  --sr-put: #1f63b5;
+  --sr-get: #12804a;
+  --sr-post: #2456d6;
+  --sr-put: #b85c00;
   --sr-patch: #7a3fb8;
-  --sr-delete: #c4321f;
+  --sr-delete: #c8283a;
   --sr-other: #5d6670;
 }
 
@@ -44,7 +47,7 @@ body {
 
 body {
   color: var(--vscode-foreground);
-  font-family: var(--vscode-font-family);
+  font-family: var(--sr-sans);
   font-size: var(--vscode-font-size);
   font-weight: var(--vscode-font-weight);
   line-height: 1.45;
@@ -84,14 +87,14 @@ button {
 .method-pill {
   display: inline-flex;
   align-items: center;
-  padding: 1px 7px;
-  border-radius: var(--sr-radius);
+  padding: 2px 9px;
+  border-radius: 999px;
   color: var(--m);
-  background: color-mix(in srgb, var(--m) 14%, transparent);
-  border: 1px solid color-mix(in srgb, var(--m) 35%, transparent);
+  background: color-mix(in srgb, var(--m) 16%, transparent);
+  font-family: var(--sr-mono);
   font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 .path-param {

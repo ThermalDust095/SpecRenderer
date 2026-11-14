@@ -38,6 +38,11 @@ export function buildCatalog(spec: NormalizedSpec): Catalog {
   };
 }
 
+/** The module an operation is listed under first. */
+export function moduleOf(operation: Operation): string {
+  return operation.tags[0] ?? firstSegment(operation.path);
+}
+
 export function endpointId(operation: Operation): string {
   return `${operation.method.toUpperCase()} ${operation.path}`;
 }

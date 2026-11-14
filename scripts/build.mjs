@@ -31,7 +31,8 @@ const builds = [
     platform: "browser",
     format: "iife",
     target: "es2022",
-    loader: { ".css": "css" },
+    loader: { ".css": "css", ".woff2": "file" },
+    assetNames: "fonts/[name]",
   },
 ];
 

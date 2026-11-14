@@ -1,5 +1,5 @@
 import type { AuthView, BodyView, EndpointDetail, FieldView, ResponseView } from "../shared/protocol";
-import { endpointId } from "./catalog";
+import { endpointId, moduleOf } from "./catalog";
 import { buildCurl, isJson, pickContent } from "./curl";
 import type { MediaType, NormalizedSpec, Operation, Response, Schema } from "./model";
 import { describeType, exampleValue, flatten } from "./sample";
@@ -11,6 +11,7 @@ export function buildEndpointDetail(spec: NormalizedSpec, operation: Operation):
     method: operation.method.toUpperCase(),
     path: operation.path,
     baseUrl: spec.baseUrl,
+    module: moduleOf(operation),
     title: operation.summary || operation.path,
     operationId: operation.operationId,
     description: operation.description,
@@ -24,6 +25,7 @@ export function buildEndpointDetail(spec: NormalizedSpec, operation: Operation):
       required: parameter.required === true,
       deprecated: parameter.deprecated,
       description: parameter.description ?? parameter.schema?.description,
+      example: explicitExample(parameter.example, parameter.schema),
     })),
     body: describeBody(operation),
     responses: Object.entries(operation.responses).map(([status, response]) =>
@@ -69,6 +71,7 @@ function describeFields(schema: Schema | undefined, mode: "request" | "response"
       required: required.has(name),
       deprecated: property.deprecated,
       description: property.description ?? property.title,
+      example: explicitExample(undefined, property),
     }));
 }
 
@@ -93,4 +96,16 @@ function describeAuth(spec: NormalizedSpec, operation: Operation): AuthView[] {
     else if (scheme?.type === "openIdConnect") label = "OpenID Connect";
     return { name, label };
   });
+}
+
+/** Only examples the spec states; generated placeholders would be noise here. */
+function explicitExample(example: unknown, schema: Schema | undefined): string | undefined {
+  const value =
+    example ??
+    schema?.example ??
+    (Array.isArray(schema?.examples) ? schema.examples[0] : undefined) ??
+    schema?.default ??
+    schema?.enum?.[0];
+  if (value === undefined || value === "") return undefined;
+  return JSON.stringify(value);
 }
