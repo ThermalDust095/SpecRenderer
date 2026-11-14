@@ -1,0 +1,81 @@
+{
+  "name": "api-explorer-vscode",
+  "displayName": "API Explorer",
+  "description": "Browse an OpenAPI specification and generate cURL commands inside VS Code.",
+  "version": "0.1.0",
+  "publisher": "api-explorer",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onView:apiExplorer.specs",
+    "onCommand:apiExplorer.refresh"
+  ],
+  "main": "./out/src/extension.js",
+  "scripts": {
+    "compile": "tsc -p .",
+    "watch": "tsc -watch -p .",
+    "test": "npm run compile && node --test out/test/openapi.test.js",
+    "vscode:prepublish": "npm run compile"
+  },
+  "dependencies": {
+    "@apidevtools/swagger-parser": "^10.1.1",
+    "yaml": "^2.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.30",
+    "@types/vscode": "^1.90.0",
+    "openapi-types": "^12.1.3",
+    "typescript": "^5.8.3"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "apiExplorer.refresh",
+        "title": "Refresh OpenAPI Spec",
+        "icon": "$(refresh)"
+      }
+    ],
+    "configuration": {
+      "title": "API Explorer",
+      "properties": {
+        "apiExplorer.specUrl": {
+          "type": "string",
+          "default": "",
+          "description": "URL of the OpenAPI 3.0 or 3.1 document to display."
+        }
+      }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "apiExplorer",
+          "title": "API Explorer",
+          "icon": "assets/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "apiExplorer": [
+        {
+          "id": "apiExplorer.specs",
+          "name": "OpenAPI",
+          "type": "webview"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "apiExplorer.refresh",
+          "when": "view == apiExplorer.specs",
+          "group": "navigation"
+        }
+      ]
+    }
+  }
+}
