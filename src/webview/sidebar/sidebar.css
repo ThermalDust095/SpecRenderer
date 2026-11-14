@@ -182,7 +182,7 @@ body {
 
 .endpoint .method {
   flex: none;
-  width: 46px;
+  width: 48px;
 }
 
 .label.deprecated {
@@ -283,4 +283,9 @@ body {
 @keyframes progress {
   from { transform: translateX(-100%); }
   to { transform: translateX(400%); }
+}
+
+.endpoint .path {
+  font-family: var(--sr-mono);
+  font-size: 12px;
 }

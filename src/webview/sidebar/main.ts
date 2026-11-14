@@ -1,7 +1,7 @@
 import "../shared/base.css";
 import "./sidebar.css";
 import type { HostToSidebar, ModuleView, SidebarState, SidebarToHost } from "../../shared/protocol";
-import { h, icon } from "../shared/dom";
+import { h, icon, pathParts } from "../shared/dom";
 import { connect } from "../shared/vscode";
 
 interface PersistedState {
@@ -148,11 +148,11 @@ function renderTree(): void {
             "data-id": endpoint.id,
             "aria-selected": active ? "true" : "false",
             className: active ? "active" : undefined,
-            title: `${endpoint.method} ${endpoint.path}${endpoint.deprecated ? " (deprecated)" : ""}`,
+            title: `${endpoint.method} ${endpoint.path}\n${endpoint.title}${endpoint.deprecated ? " (deprecated)" : ""}`,
             onclick: () => openEndpoint(key, endpoint.id),
           },
           h(`span.method.m-${endpoint.method.toLowerCase()}`, {}, endpoint.method),
-          h(`span.label${endpoint.deprecated ? ".deprecated" : ""}`, {}, endpoint.title),
+          h(`span.label.path${endpoint.deprecated ? ".deprecated" : ""}`, {}, ...pathParts(endpoint.path)),
         ),
       );
     }

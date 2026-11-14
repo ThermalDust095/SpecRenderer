@@ -3,7 +3,7 @@
 ## 0.2.0
 
 - Renamed to **Spec Renderer**. The setting is now `specRenderer.specUrl`.
-- New sidebar: endpoints grouped into collapsible modules, with coloured method labels.
+- New sidebar: endpoints listed by method and path, grouped into collapsible modules.
 - Endpoint details open in a single editor tab that is reused for each endpoint.
 - Added Swagger 2.0 support.
 - Spec discovery from docs pages such as `/docs` and `/swagger-ui/index.html`.
