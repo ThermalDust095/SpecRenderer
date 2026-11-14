@@ -1,0 +1,140 @@
+/* Shared tokens for both webviews. Colors derive from the active VS Code theme. */
+:root {
+  --sr-radius: 4px;
+  --sr-border: var(--vscode-widget-border, var(--vscode-panel-border, rgba(128, 128, 128, 0.25)));
+  --sr-muted: var(--vscode-descriptionForeground);
+  --sr-mono: var(--vscode-editor-font-family, ui-monospace, monospace);
+  --sr-hover: var(--vscode-list-hoverBackground);
+  --sr-code-bg: var(--vscode-textCodeBlock-background, rgba(128, 128, 128, 0.1));
+  --sr-subtle-bg: color-mix(in srgb, var(--vscode-foreground) 6%, transparent);
+
+  --sr-get: #4ec98f;
+  --sr-post: #f2b84b;
+  --sr-put: #6cb2f7;
+  --sr-patch: #c79bf2;
+  --sr-delete: #f0806f;
+  --sr-other: #9ba3ad;
+}
+
+body.vscode-light {
+  --sr-get: #13804c;
+  --sr-post: #a86500;
+  --sr-put: #1f63b5;
+  --sr-patch: #7a3fb8;
+  --sr-delete: #c4321f;
+  --sr-other: #5d6670;
+}
+
+body.vscode-high-contrast,
+body.vscode-high-contrast-light {
+  --sr-border: var(--vscode-contrastBorder);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: var(--vscode-foreground);
+  font-family: var(--vscode-font-family);
+  font-size: var(--vscode-font-size);
+  font-weight: var(--vscode-font-weight);
+  line-height: 1.45;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Method colours, used by `.method` labels and `.method-pill` badges. */
+.m-get { --m: var(--sr-get); }
+.m-post { --m: var(--sr-post); }
+.m-put { --m: var(--sr-put); }
+.m-patch { --m: var(--sr-patch); }
+.m-delete { --m: var(--sr-delete); }
+.m-head, .m-options, .m-trace { --m: var(--sr-other); }
+
+.method {
+  color: var(--m);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.method-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 7px;
+  border-radius: var(--sr-radius);
+  color: var(--m);
+  background: color-mix(in srgb, var(--m) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--m) 35%, transparent);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.path-param {
+  color: var(--vscode-textLink-foreground);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border: 1px solid var(--vscode-button-border, transparent);
+  border-radius: 2px;
+  background: var(--vscode-button-background);
+  color: var(--vscode-button-foreground);
+  cursor: pointer;
+}
+.btn:hover { background: var(--vscode-button-hoverBackground); }
+.btn.secondary {
+  background: var(--vscode-button-secondaryBackground);
+  color: var(--vscode-button-secondaryForeground);
+}
+.btn.secondary:hover { background: var(--vscode-button-secondaryHoverBackground); }
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 3px 6px;
+  border: 0;
+  border-radius: var(--sr-radius);
+  background: transparent;
+  color: var(--vscode-icon-foreground, var(--vscode-foreground));
+  cursor: pointer;
+}
+.icon-btn:hover { background: var(--vscode-toolbar-hoverBackground, var(--sr-hover)); }
+
+:focus-visible {
+  outline: 1px solid var(--vscode-focusBorder);
+  outline-offset: -1px;
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: var(--vscode-scrollbarSlider-background); }
+::-webkit-scrollbar-thumb:hover { background: var(--vscode-scrollbarSlider-hoverBackground); }
