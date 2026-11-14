@@ -151,8 +151,9 @@ function renderTree(): void {
             title: `${endpoint.method} ${endpoint.path}\n${endpoint.title}${endpoint.deprecated ? " (deprecated)" : ""}`,
             onclick: () => openEndpoint(key, endpoint.id),
           },
-          h(`span.method.m-${endpoint.method.toLowerCase()}`, {}, endpoint.method),
+          h(`span.method-tag.m-${endpoint.method.toLowerCase()}`, {}, endpoint.method),
           h(`span.label.path${endpoint.deprecated ? ".deprecated" : ""}`, {}, ...pathParts(endpoint.path)),
+          endpoint.deprecated ? h("span.deprecated-tag", {}, "deprecated") : null,
         ),
       );
     }
@@ -174,9 +175,9 @@ function moduleRow(module: ModuleView, open: boolean): HTMLElement {
       title: module.description ?? module.name,
       onclick: () => toggle(module.name, key),
     },
-    icon("chevron", `icon chevron${open ? " open" : ""}`),
     h("span.label", {}, module.name),
     h("span.count", {}, String(module.endpoints.length)),
+    icon("chevron", `icon chevron${open ? " open" : ""}`),
   );
 }
 
