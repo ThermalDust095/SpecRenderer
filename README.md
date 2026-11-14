@@ -1,46 +1,105 @@
-# API Explorer
+# Spec Renderer
 
-API Explorer brings an OpenAPI browser directly into a VS Code Activity Bar
-view. It renders inside VS Code—no browser tab is opened. Browse the operations
-in one OpenAPI 3.0 or 3.1 document and generate cURL commands without leaving
-your editor.
+Browse an **OpenAPI** or **Swagger** spec from the VS Code Activity Bar and copy
+ready-to-run **cURL** commands without leaving the editor.
+
+<p>
+  <img src="docs/images/sidebar.png" alt="Spec Renderer sidebar listing modules and endpoints" width="300">
+  <img src="docs/images/panel.png" alt="Endpoint details page with parameters, responses, cURL and example response" width="620">
+</p>
 
 ## Features
 
-- Browse operations grouped by path and HTTP method.
-- Inspect operation summaries, descriptions, parameters, and request bodies.
-- Generate and copy a cURL command for an operation.
-- Refresh the configured document with the view's refresh button. A failed
-  request or invalid document does not replace the last valid document.
+- **Modules → endpoints.** Endpoints are grouped by tag. Untagged endpoints are
+  grouped by their first path segment (`/items/{id}` → `items`).
+- **One details tab.** Clicking an endpoint opens its details beside your code.
+  Clicking another endpoint replaces the contents of the same tab.
+- **cURL commands.** Generated from examples and schemas, with file uploads
+  (`-F file=@…`), form bodies and auth placeholders (`Bearer <token>`,
+  `<api-key>`).
+- **Docs-style details page.** Parameters grouped by location, request body and
+  collapsible responses on the left. Sticky code cards on the right with the
+  cURL command and a line-numbered example response.
+- **Point it at a docs page.** `http://localhost:8000/docs` (FastAPI),
+  `/swagger-ui/index.html` (Spring) and similar pages work; the spec URL is found
+  automatically.
+- **Forgiving.** Specs with minor validation errors still load with a warning.
+  A failed refresh keeps the last good spec.
+- **Keyboard and theme friendly.** Arrow keys move through the tree, and the UI
+  follows your colour theme, including light and high-contrast themes.
 
-The extension displays specifications and generates commands; it does not send
-API requests.
+### Supported specs
 
-## Setup
+| Format        | Versions   | Encoding    |
+| ------------- | ---------- | ----------- |
+| OpenAPI       | 3.0, 3.1   | JSON, YAML  |
+| Swagger       | 2.0        | JSON, YAML  |
 
-Set `apiExplorer.specUrl` in VS Code settings to the URL of an OpenAPI 3.0 or
-3.1 JSON or YAML document. Then select the API Explorer icon in the Activity Bar.
-The view loads the document when opened and can be refreshed from its title bar.
+## Getting started
 
-Generated cURL commands use the first server declared by the document (or
-`http://localhost` if none is declared), parameter examples/defaults where
-available, and request-body examples/schema defaults where available. JSON,
-text, URL-encoded, and simple multipart form bodies are supported. Replace
-placeholder values before running a command. Authentication credentials are
-not inferred or fetched by the extension.
+1. Open the **Spec Renderer** view in the Activity Bar.
+2. Click **Set Spec URL**, or the link icon in the view's title bar, and enter a
+   URL, for example `http://127.0.0.1:8000/openapi.json`.
+3. Expand a module and click an endpoint.
 
-The Marketplace publisher identifier in `package.json` is a placeholder and
-must be changed to your publisher ID before publishing.
+The URL is saved in the `specRenderer.specUrl` setting. When a folder is open
+it is saved to the workspace, so each project keeps its own spec.
+
+| Setting                 | Description                                         |
+| ----------------------- | --------------------------------------------------- |
+| `specRenderer.specUrl`  | URL of the spec, or of a docs page that links to it. |
+
+| Command                              | Where                  |
+| ------------------------------------ | ---------------------- |
+| Spec Renderer: Set Spec URL          | View title bar, palette |
+| Spec Renderer: Refresh Spec          | View title bar, palette |
+| Spec Renderer: Collapse All Modules  | View title bar, palette |
+
+Spec Renderer displays specs and generates commands. It never sends requests to
+your API.
 
 ## Development
 
 ```sh
 npm install
-npm test
+npm run build      # bundle to dist/ (use `npm run watch` while developing)
+npm test           # unit tests for the spec pipeline
+npm run typecheck  # extension + webview type checks
 ```
 
-Press `F5` in VS Code to launch an Extension Development Host.
+Press **F5** in VS Code to launch an Extension Development Host.
+
+### Project layout
+
+```
+src/
+  extension.ts          activate(): wires store, views and commands
+  config.ts             specRenderer.* settings
+  specStore.ts          loaded spec + loading / error state
+  spec/                 pure TypeScript, no vscode imports, unit-tested
+    loader.ts           download + docs-page discovery
+    parser.ts           JSON/YAML, validation, $ref resolution
+    normalize.ts        OpenAPI 3 / Swagger 2 → one internal model
+    catalog.ts          modules and endpoint list
+    details.ts          view model for one endpoint
+    curl.ts             cURL builder
+    sample.ts           example values from schemas
+    model.ts            types
+  shared/protocol.ts    messages between extension and webviews
+  views/
+    sidebarView.ts      Activity Bar webview (module tree)
+    endpointPanel.ts    single reusable details tab
+    webviewHtml.ts      HTML shell + Content Security Policy
+  webview/              browser code, bundled by esbuild
+    sidebar/            tree UI
+    panel/              endpoint details UI
+    shared/             DOM helpers, theme tokens
+media/                  Activity Bar, tab and Marketplace icons
+test/                   node:test suites
+```
+
+Publishing steps are in [docs/PUBLISHING.md](docs/PUBLISHING.md).
 
 ## License
 
-This project is licensed under the MIT License. See [LICENSE](LICENSE).
+[MIT](LICENSE). Bundled fonts: see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
