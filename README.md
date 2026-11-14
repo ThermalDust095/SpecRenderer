@@ -56,6 +56,7 @@ it is saved to the workspace, so each project keeps its own spec.
 | Spec Renderer: Set Spec URL          | View title bar, palette |
 | Spec Renderer: Refresh Spec          | View title bar, palette |
 | Spec Renderer: Collapse All Modules  | View title bar, palette |
+| Copy cURL                            | Right-click an endpoint in the sidebar |
 
 Spec Renderer displays specs and generates commands. It never sends requests to
 your API.

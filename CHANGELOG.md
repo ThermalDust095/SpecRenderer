@@ -11,6 +11,7 @@
   response cards on the right.
 - Setting `specRenderer.openEndpointIn`: open endpoint details in the active
   editor group (default) or in a split beside it.
+- Right-click an endpoint in the sidebar → **Copy cURL**.
 - Added Swagger 2.0 support.
 - Spec discovery from docs pages such as `/docs` and `/swagger-ui/index.html`.
 - Specs with validation errors load with a warning instead of failing.

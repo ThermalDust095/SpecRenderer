@@ -74,6 +74,11 @@
         "title": "Collapse All Modules",
         "category": "Spec Renderer",
         "icon": "$(collapse-all)"
+      },
+      {
+        "command": "specRenderer.copyCurl",
+        "title": "Copy cURL",
+        "category": "Spec Renderer"
       }
     ],
     "configuration": {
@@ -130,6 +135,19 @@
           "command": "specRenderer.collapseAll",
           "when": "view == specRenderer.endpoints",
           "group": "navigation@3"
+        }
+      ],
+      "webview/context": [
+        {
+          "command": "specRenderer.copyCurl",
+          "when": "webviewId == 'specRenderer.endpoints' && webviewSection == 'endpoint'",
+          "group": "1_copy@1"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "specRenderer.copyCurl",
+          "when": "false"
         }
       ]
     }
