@@ -23,6 +23,9 @@ export function activate(context: vscode.ExtensionContext): void {
     vscode.commands.registerCommand("specRenderer.refresh", () => store.refresh()),
     vscode.commands.registerCommand("specRenderer.collapseAll", () => sidebar.collapseAll()),
     vscode.commands.registerCommand("specRenderer.setSpecUrl", promptForSpecUrl),
+    vscode.commands.registerCommand("specRenderer.copyCurl", (context?: { endpointId?: unknown }) =>
+      copyCurl(store, context),
+    ),
 
     vscode.workspace.onDidChangeConfiguration((event) => {
       if (affectsSpecUrl(event)) void store.load(getSpecUrl());
@@ -33,6 +36,15 @@ export function activate(context: vscode.ExtensionContext): void {
 }
 
 export function deactivate(): void {}
+
+/** Right-click → Copy cURL on a sidebar endpoint. */
+async function copyCurl(store: SpecStore, context?: { endpointId?: unknown }): Promise<void> {
+  const id = typeof context?.endpointId === "string" ? context.endpointId : undefined;
+  const endpoint = id ? store.endpoint(id) : undefined;
+  if (!endpoint) return;
+  await vscode.env.clipboard.writeText(endpoint.curl);
+  vscode.window.setStatusBarMessage(`$(check) Copied cURL for ${endpoint.method} ${endpoint.path}`, 2500);
+}
 
 async function promptForSpecUrl(): Promise<void> {
   const url = await vscode.window.showInputBox({

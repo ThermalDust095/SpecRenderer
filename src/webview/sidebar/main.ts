@@ -13,6 +13,8 @@ interface PersistedState {
 }
 
 const app = document.getElementById("app")!;
+// No Cut/Copy/Paste menu on empty space; endpoint rows add their own items.
+document.body.dataset.vscodeContext = JSON.stringify({ preventDefaultContextMenuItems: true });
 let state: SidebarState | undefined;
 let focusKey: string | undefined;
 
@@ -156,6 +158,12 @@ function renderTree(): void {
             tabindex: "-1",
             "data-key": key,
             "data-id": endpoint.id,
+            // Read by VS Code for the right-click menu (webview/context in package.json).
+            "data-vscode-context": JSON.stringify({
+              webviewSection: "endpoint",
+              endpointId: endpoint.id,
+              preventDefaultContextMenuItems: true,
+            }),
             "aria-selected": active ? "true" : "false",
             className: active ? "active" : undefined,
             title: `${endpoint.method} ${endpoint.path}\n${endpoint.title}${endpoint.deprecated ? " (deprecated)" : ""}`,
